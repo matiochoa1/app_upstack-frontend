@@ -9,7 +9,10 @@
 		"paths": {
 			"@/components/*": ["components/*"], // ! Esto permite que typescript reconozca los alias de los componentes
 			"@/views/*": ["views/*"], // ! Esto permite que typescript reconozca los alias de las vistas
-			"@/layouts/*": ["layouts/*"] // ! Esto permite que typescript reconozca los alias de los layouts
+			"@/layouts/*": ["layouts/*"], // ! Esto permite que typescript reconozca los alias de los layouts
+			"@/api/*": ["api/*"], // ! Esto permite que typescript reconozca los alias de las apis
+			"@/types/*": ["types/*"], // ! Esto permite que typescript reconozca los alias de los types
+			"@/lib/*": ["lib/*"] // ! Esto permite que typescript reconozca los alias de las librerias
 		},
 
 		/* Bundler mode */
