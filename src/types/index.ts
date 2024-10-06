@@ -9,6 +9,15 @@ export const projectSchema = z.object({
 	projectDescription: z.string(),
 });
 
+export const dashboardProjectSchema = z.array(
+	projectSchema.pick({
+		_id: true,
+		projectName: true,
+		clientName: true,
+		projectDescription: true,
+	})
+);
+
 export type Project = z.infer<typeof projectSchema>;
 export type ProjectFormData = Pick<
 	Project,

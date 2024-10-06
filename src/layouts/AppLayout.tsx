@@ -1,12 +1,14 @@
 import { Outlet } from "react-router-dom";
+import { ToastContainer, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Logo from "@/components/Logo";
 import NavMenu from "@/components/NavMenu";
 
 export default function AppLayout() {
 	return (
 		<>
-			<header className="bg-gray-800 py-5">
-				<div className="max-w-screen-2xl mx-auto flex flex-col lg:flex-row justify-between items-center">
+			<header className="py-5 bg-gray-800">
+				<div className="flex flex-col items-center justify-between mx-auto max-w-screen-2xl lg:flex-row">
 					<div className="w-64">
 						<Logo />
 					</div>
@@ -15,7 +17,7 @@ export default function AppLayout() {
 				</div>
 			</header>
 
-			<section className="max-w-sreen-2xl p-5 mx-auto mt-10">
+			<section className="p-5 mx-auto mt-10 max-w-screen-2xl">
 				<Outlet />
 			</section>
 
@@ -24,6 +26,8 @@ export default function AppLayout() {
 					Todos los derechos reservados &copy; {new Date().getFullYear()}
 				</p>
 			</footer>
+
+			<ToastContainer theme="dark" position="top-right" transition={Zoom} />
 		</>
 	);
 }
