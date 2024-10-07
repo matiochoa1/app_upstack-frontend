@@ -27,7 +27,12 @@ export default function AppLayout() {
 				</p>
 			</footer>
 
-			<ToastContainer theme="dark" position="top-right" transition={Zoom} />
+			<ToastContainer
+				theme="dark"
+				position="top-right"
+				transition={Zoom}
+				autoClose={3000}
+			/>
 		</>
 	);
 }
