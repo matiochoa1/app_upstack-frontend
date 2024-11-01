@@ -54,7 +54,10 @@ type ProjectAPIType = {
 	projectId: Project["_id"];
 }; // generamos un type para que nos aseguremos que el proyecto tenga los datos correctos
 
-export async function updateProject({ formData, projectId }: ProjectAPIType) {
+export async function updateProject({
+	formData,
+	projectId,
+}: Pick<ProjectAPIType, "formData" | "projectId">) {
 	try {
 		const { data } = await api.put<string>(`/projects/${projectId}`, formData);
 
