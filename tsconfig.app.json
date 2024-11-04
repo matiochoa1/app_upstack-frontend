@@ -12,7 +12,9 @@
 			"@/layouts/*": ["layouts/*"], // ! Esto permite que typescript reconozca los alias de los layouts
 			"@/api/*": ["api/*"], // ! Esto permite que typescript reconozca los alias de las apis
 			"@/types/*": ["types/*"], // ! Esto permite que typescript reconozca los alias de los types
-			"@/lib/*": ["lib/*"] // ! Esto permite que typescript reconozca los alias de las librerias
+			"@/lib/*": ["lib/*"], // ! Esto permite que typescript reconozca los alias de las librerias
+			"@/utils/*": ["utils/*"], // ! Esto permite que typescript reconozca los alias de las librerias
+			"@/locales/*": ["locales/*"] // ! Esto permite que typescript reconozca los alias de los locales
 		},
 
 		/* Bundler mode */

@@ -1,5 +1,6 @@
 import { Task } from "@/types/index";
 import TaskCard from "./TaskCard";
+import { statusTranslations } from "@/locales/es";
 
 type TaskListProps = {
 	tasks: Task[];
@@ -16,14 +17,6 @@ const initialStatusGroups: GroupedTasks = {
 	UNDER_REVIEW: [],
 	COMPLETED: [],
 }; // inicializamos el estado de los grupos de tareas para que task.status sea uno de los valores de la enumeracion
-
-const statusTranslations: { [key: string]: string } = {
-	PENDING: "Pending",
-	ON_HOLD: "On Hold",
-	IN_PROGRESS: "In Progress",
-	UNDER_REVIEW: "Under Review",
-	COMPLETED: "Completed",
-};
 
 const statusColors: { [key: string]: string } = {
 	PENDING: "border-t-yellow-500",
