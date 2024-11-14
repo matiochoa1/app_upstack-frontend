@@ -1,57 +1,63 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { UserLoginForm } from "@/types/index";
+import { ForgotPasswordForm } from "../../types";
 import ErrorMessage from "@/components/ErrorMessage";
-import { authenticateUser } from "@/api/AuthAPI";
+import { forgotPasswordForm } from "@/api/AuthAPI";
 import { toast } from "react-toastify";
 
-export default function LoginView() {
-	const initialValues: UserLoginForm = {
+export default function ForgotPasswordView() {
+	const initialValues: ForgotPasswordForm = {
 		email: "",
-		password: "",
 	};
 	const {
 		register,
 		handleSubmit,
+		reset,
 		formState: { errors },
 	} = useForm({ defaultValues: initialValues });
 
 	const { mutate } = useMutation({
-		mutationFn: authenticateUser,
+		mutationFn: forgotPasswordForm,
 		onError: (error) => {
 			toast.error(error.message);
 		},
 		onSuccess: (data) => {
 			toast.success(data);
+			reset();
 		},
 	});
 
-	const handleLogin = (formData: UserLoginForm) => mutate(formData);
+	const handleForgotPassword = (formData: ForgotPasswordForm) =>
+		mutate(formData);
 
 	return (
 		<>
 			<h1 className="text-4xl font-black text-center text-white">
-				Iniciar Sesión
+				Reestablecer contraseña
 			</h1>
 			<p className="mt-5 text-xl font-light text-center text-white">
-				Comienza a planear tus proyectos
-				<span className="font-bold text-fuchsia-500"> iniciando sesión.</span>
+				Olvidaste tu contraseña? Ingresa tu correo y te enviaremos un correo
+				<span className="font-bold text-fuchsia-500">
+					{" "}
+					para reestablecerla.
+				</span>
 			</p>
 			<form
-				onSubmit={handleSubmit(handleLogin)}
+				onSubmit={handleSubmit(handleForgotPassword)}
 				className="p-10 mt-10 space-y-8 bg-white"
 				noValidate>
 				<div className="flex flex-col gap-5">
-					<label className="text-2xl font-normal">Email</label>
-
+					<label className="text-2xl font-normal" htmlFor="email">
+						Email
+					</label>
 					<input
 						id="email"
 						type="email"
 						placeholder="Email de Registro"
 						className="w-full p-3 border border-gray-300"
 						{...register("email", {
-							required: "El Email es obligatorio",
+							required: "El Email de registro es obligatorio",
 							pattern: {
 								value: /\S+@\S+\.\S+/,
 								message: "E-mail no válido",
@@ -61,42 +67,26 @@ export default function LoginView() {
 					{errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
 				</div>
 
-				<div className="flex flex-col gap-5">
-					<label className="text-2xl font-normal">Password</label>
-
-					<input
-						type="password"
-						placeholder="Password de Registro"
-						className="w-full p-3 border border-gray-300"
-						{...register("password", {
-							required: "El Password es obligatorio",
-						})}
-					/>
-					{errors.password && (
-						<ErrorMessage>{errors.password.message}</ErrorMessage>
-					)}
-				</div>
-
 				<input
 					type="submit"
-					value="Iniciar Sesión"
+					value="Enviar Instrucciones"
 					className="w-full p-3 text-xl font-black text-white cursor-pointer bg-fuchsia-600 hover:bg-fuchsia-700"
 				/>
 			</form>
 
 			<nav className="flex flex-col mt-10 space-y-4">
 				<Link
+					to={"/auth/login"}
+					className="font-normal text-center text-gray-300">
+					Ya tienes cuenta?{" "}
+					<span className="font-bold text-fuchsia-500">Inicia Sesion</span>
+				</Link>
+
+				<Link
 					to={"/auth/register"}
 					className="font-normal text-center text-gray-300">
 					No tienes una cuenta?{" "}
 					<span className="font-bold text-fuchsia-500">Crea una</span>
-				</Link>
-
-				<Link
-					to={"/auth/forgot-password"}
-					className="font-normal text-center text-gray-300">
-					Olvidaste tu contraseña?{" "}
-					<span className="font-bold text-fuchsia-500">Reestablecer</span>
 				</Link>
 			</nav>
 		</>
