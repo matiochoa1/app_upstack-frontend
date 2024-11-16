@@ -22,8 +22,8 @@ export default function LoginView() {
 		onError: (error) => {
 			toast.error(error.message);
 		},
-		onSuccess: (data) => {
-			toast.success(data);
+		onSuccess: () => {
+			toast.success("Iniciando sesión...");
 		},
 	});
 
