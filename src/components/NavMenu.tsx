@@ -6,20 +6,24 @@ import {
 	Transition,
 } from "@headlessui/react";
 import { Bars3Icon } from "@heroicons/react/20/solid";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { User } from "../types";
 import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 type NavMenuProps = {
 	username: User["name"];
 };
 
 export default function NavMenu({ username }: NavMenuProps) {
+	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 
 	const logout = () => {
 		localStorage.removeItem("AUTH_TOKEN"); // eliminamos el JWT del localStorage
-		queryClient.invalidateQueries({ queryKey: ["user"] }); // invalidamos la query para que el custom hook de useAuth elimine la data que ha quedado cacheada
+		queryClient.removeQueries({ queryKey: ["user"] }); // invalidamos la query para que el custom hook de useAuth elimine la data que ha quedado cacheada
+		toast.success("Cerrando sesión...");
+		setTimeout(() => navigate("/auth/login"), 2000); // redireccionamos al usuario a la pagina de login
 	};
 	return (
 		<Popover className="relative">

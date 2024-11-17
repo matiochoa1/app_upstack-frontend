@@ -25,7 +25,10 @@ export default function LoginView() {
 			toast.error(error.message);
 		},
 		onSuccess: () => {
-			navigate("/");
+			toast.success("Iniciando Sesión...");
+			setTimeout(() => {
+				navigate("/");
+			}, 2000);
 		},
 	});
 
