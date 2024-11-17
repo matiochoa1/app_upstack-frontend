@@ -14,7 +14,8 @@
 			"@/types/*": ["types/*"], // ! Esto permite que typescript reconozca los alias de los types
 			"@/lib/*": ["lib/*"], // ! Esto permite que typescript reconozca los alias de las librerias
 			"@/utils/*": ["utils/*"], // ! Esto permite que typescript reconozca los alias de las librerias
-			"@/locales/*": ["locales/*"] // ! Esto permite que typescript reconozca los alias de los locales
+			"@/locales/*": ["locales/*"], // ! Esto permite que typescript reconozca los alias de los locales
+			"@/hooks/*": ["hooks/*"] // ! Esto permite que typescript reconozca los alias de los hooks
 		},
 
 		/* Bundler mode */

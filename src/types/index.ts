@@ -44,6 +44,19 @@ export type ProjectFormData = Pick<
 	"clientName" | "projectDescription" | "projectName"
 >;
 
+// Users
+
+export const userSchema = authSchema
+	.pick({
+		name: true,
+		email: true,
+	})
+	.extend({
+		_id: z.string(), // esto es para que se pueda agregar el id del usuario aparte de lo que viene del authSchema
+	});
+
+export type User = z.infer<typeof userSchema>;
+
 // Task Schema
 
 export const taskStatusSchema = z.enum([
