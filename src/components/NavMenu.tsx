@@ -8,12 +8,19 @@ import {
 import { Bars3Icon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 import { User } from "../types";
+import { useQueryClient } from "@tanstack/react-query";
 
 type NavMenuProps = {
 	username: User["name"];
 };
 
 export default function NavMenu({ username }: NavMenuProps) {
+	const queryClient = useQueryClient();
+
+	const logout = () => {
+		localStorage.removeItem("AUTH_TOKEN"); // eliminamos el JWT del localStorage
+		queryClient.invalidateQueries({ queryKey: ["user"] }); // invalidamos la query para que el custom hook de useAuth elimine la data que ha quedado cacheada
+	};
 	return (
 		<Popover className="relative">
 			<PopoverButton className="inline-flex items-center p-1 mr-2 text-sm font-semibold leading-6 bg-purple-400 rounded-lg gap-x-2">
@@ -42,7 +49,7 @@ export default function NavMenu({ username }: NavMenuProps) {
 						<button
 							className="block w-full p-2 rounded-lg hover:bg-purple-500 text-start"
 							type="button"
-							onClick={() => {}}>
+							onClick={logout}>
 							Cerrar Sesión
 						</button>
 					</div>
