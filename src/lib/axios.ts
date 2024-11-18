@@ -8,7 +8,7 @@ api.interceptors.request.use((config) => {
 	const token = localStorage.getItem("AUTH_TOKEN");
 
 	if (token) {
-		config.headers.Authorization = `Beared ${token}`;
+		config.headers.Authorization = `Bearer ${token}`;
 	}
 
 	return config;
