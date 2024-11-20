@@ -15,9 +15,10 @@ import { deleteTask } from "@/api/TaskAPI";
 
 type TaskCardProps = {
 	task: Task;
+	canEdit: boolean;
 };
 
-export default function TaskCard({ task }: TaskCardProps) {
+export default function TaskCard({ task, canEdit }: TaskCardProps) {
 	const navigate = useNavigate();
 	const params = useParams();
 	const projectId = params.projectId!;
@@ -44,7 +45,10 @@ export default function TaskCard({ task }: TaskCardProps) {
 				<div className="flex flex-col min-w-0 gap-y-4">
 					<button
 						type="button"
-						className="text-xl font-bold text-left text-slate-600 ">
+						className="text-xl font-bold text-left text-slate-600 "
+						onClick={() =>
+							navigate(location.pathname + `?editTask=${task._id}`)
+						}>
 						{task.taskName}
 					</button>
 					<p className="text-slate-500">{task.description}</p>
@@ -75,25 +79,29 @@ export default function TaskCard({ task }: TaskCardProps) {
 										Ver Tarea
 									</button>
 								</MenuItem>
-								<MenuItem>
-									<button
-										type="button"
-										className="block w-full px-3 py-1 text-sm leading-6 text-gray-900 transition-colors rounded-lg hover:bg-purple-500 text-start"
-										onClick={() =>
-											navigate(location.pathname + `?editTask=${task._id}`)
-										}>
-										Editar Tarea
-									</button>
-								</MenuItem>
+								{canEdit && (
+									<>
+										<MenuItem>
+											<button
+												type="button"
+												className="block w-full px-3 py-1 text-sm leading-6 text-gray-900 transition-colors rounded-lg hover:bg-purple-500 text-start"
+												onClick={() =>
+													navigate(location.pathname + `?editTask=${task._id}`)
+												}>
+												Editar Tarea
+											</button>
+										</MenuItem>
 
-								<MenuItem>
-									<button
-										type="button"
-										className="block w-full px-3 py-1 text-sm leading-6 text-red-500 transition-colors rounded-lg hover:bg-red-500 hover:text-white text-start"
-										onClick={handleDeleteTask}>
-										Eliminar Tarea
-									</button>
-								</MenuItem>
+										<MenuItem>
+											<button
+												type="button"
+												className="block w-full px-3 py-1 text-sm leading-6 text-red-500 transition-colors rounded-lg hover:bg-red-500 hover:text-white text-start"
+												onClick={handleDeleteTask}>
+												Eliminar Tarea
+											</button>
+										</MenuItem>
+									</>
+								)}
 							</MenuItems>
 						</Transition>
 					</Menu>
