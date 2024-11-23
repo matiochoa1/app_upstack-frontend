@@ -99,7 +99,7 @@ export default function TaskModalDetails() {
 											Agregada el: {formatDate(data.createdAt)}
 										</p>
 										<p className="text-sm text-slate-400">
-											Última actualización:{formatDate(data.updatedAt)}
+											Última actualización: {formatDate(data.updatedAt)}
 										</p>
 
 										<DialogTitle
@@ -111,6 +111,20 @@ export default function TaskModalDetails() {
 										<p className="mb-2 text-lg text-slate-500">
 											Descripción: {data.description}
 										</p>
+
+										<p className="mb-2 text-2xl text-slate-500">
+											Historial de Cambios
+										</p>
+										<ul className="list-decimal">
+											{data.completedBy.map((change) => (
+												<li key={change._id}>
+													<span className="font-bold text-slate-600">
+														{statusTranslations[change.status]}
+													</span>{" "}
+													por: {change.user.name}
+												</li>
+											))}
+										</ul>
 										<div className="my-5 space-y-3">
 											<label className="font-bold">Estado Actual:</label>
 
