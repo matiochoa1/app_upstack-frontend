@@ -1,134 +1,160 @@
 import api from "@/lib/axios";
 import { isAxiosError } from "axios";
 import {
-	ConfirmToken,
-	ForgotPasswordForm,
-	NewPasswordForm,
-	RequestConfirmationCodeForm,
-	UserLoginForm,
-	UserRegistrationForm,
-	userSchema,
+  CheckPassword,
+  ConfirmToken,
+  ForgotPasswordForm,
+  NewPasswordForm,
+  RequestConfirmationCodeForm,
+  UserLoginForm,
+  UserRegistrationForm,
+  userSchema,
 } from "../types";
 
 export async function createAccount(formData: UserRegistrationForm) {
-	try {
-		const url = "auth/create-account";
+  try {
+    const url = "auth/create-account";
 
-		const { data } = await api.post<string>(url, formData);
+    const { data } = await api.post<string>(url, formData);
 
-		return data;
-	} catch (error) {
-		if (isAxiosError(error) && error.response) {
-			throw new Error(error.response?.data.error);
-		}
-	}
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response?.data.error);
+    }
+  }
 }
 
 export async function confirmAccount(formData: ConfirmToken) {
-	try {
-		const url = "auth/confirm-account";
+  try {
+    const url = "auth/confirm-account";
 
-		const { data } = await api.post<string>(url, formData);
+    const { data } = await api.post<string>(url, formData);
 
-		return data;
-	} catch (error) {
-		if (isAxiosError(error) && error.response) {
-			throw new Error(error.response?.data.error);
-		}
-	}
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response?.data.error);
+    }
+  }
 }
 
 export async function requestConfirmationCode(
-	formData: RequestConfirmationCodeForm
+  formData: RequestConfirmationCodeForm
 ) {
-	try {
-		const url = "auth/request-code";
+  try {
+    const url = "auth/request-code";
 
-		const { data } = await api.post<string>(url, formData);
+    const { data } = await api.post<string>(url, formData);
 
-		return data;
-	} catch (error) {
-		if (isAxiosError(error) && error.response) {
-			throw new Error(error.response?.data.error);
-		}
-	}
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response?.data.error);
+    }
+  }
 }
 
 export async function authenticateUser(formData: UserLoginForm) {
-	try {
-		const url = "auth/login";
+  try {
+    const url = "auth/login";
 
-		const { data } = await api.post<string>(url, formData);
+    const { data } = await api.post<string>(url, formData);
 
-		localStorage.setItem("AUTH_TOKEN", data);
+    localStorage.setItem("AUTH_TOKEN", data);
 
-		return data;
-	} catch (error) {
-		if (isAxiosError(error) && error.response) {
-			throw new Error(error.response?.data.error);
-		}
-	}
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response?.data.error);
+    }
+  }
 }
 
 export async function forgotPasswordForm(formData: ForgotPasswordForm) {
-	try {
-		const url = "auth/reset-password";
+  try {
+    const url = "auth/reset-password";
 
-		const { data } = await api.post<string>(url, formData);
+    const { data } = await api.post<string>(url, formData);
 
-		return data;
-	} catch (error) {
-		if (isAxiosError(error) && error.response) {
-			throw new Error(error.response?.data.error);
-		}
-	}
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response?.data.error);
+    }
+  }
 }
 
 export async function validateToken(formData: ConfirmToken) {
-	try {
-		const url = "auth/validate-token";
+  try {
+    const url = "auth/validate-token";
 
-		const { data } = await api.post<string>(url, formData);
+    const { data } = await api.post<string>(url, formData);
 
-		return data;
-	} catch (error) {
-		if (isAxiosError(error) && error.response) {
-			throw new Error(error.response?.data.error);
-		}
-	}
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response?.data.error);
+    }
+  }
 }
 
 export async function updatePasswordWithToken({
-	formData,
-	token,
+  formData,
+  token,
 }: {
-	formData: NewPasswordForm;
-	token: ConfirmToken["token"];
+  formData: NewPasswordForm;
+  token: ConfirmToken["token"];
 }) {
-	try {
-		const url = `/auth/update-password/${token}`;
+  try {
+    const url = `/auth/update-password/${token}`;
 
-		const { data } = await api.post<string>(url, formData);
+    const { data } = await api.post<string>(url, formData);
 
-		return data;
-	} catch (error) {
-		if (isAxiosError(error) && error.response) {
-			throw new Error(error.response?.data.error);
-		}
-	}
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response?.data.error);
+    }
+  }
 }
 
 export async function getUser() {
-	try {
-		const { data } = await api.get("/auth/user");
+  const token = localStorage.getItem("AUTH_TOKEN");
 
-		const response = userSchema.safeParse(data);
-		if (response.success) {
-			return response.data;
-		}
-	} catch (error) {
-		if (isAxiosError(error) && error.response) {
-			throw new Error(error.response?.data.error);
-		}
-	}
+  // Return null or throw an error if the token is not present.
+  if (!token) {
+    throw new Error("No authentication token found");
+  }
+
+  try {
+    const { data } = await api.get("/auth/user");
+    const response = userSchema.safeParse(data);
+
+    if (response.success) {
+      return response.data;
+    } else {
+      throw new Error("User schema validation failed");
+    }
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response?.data.error || "Authentication failed");
+    }
+    throw error;
+  }
+}
+
+export async function checkPassword(formData: CheckPassword) {
+  try {
+    const url = "/auth/check-password";
+
+    const { data } = await api.post<string>(url, formData);
+
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response?.data.error || "Authentication failed");
+    }
+    throw error;
+  }
 }
