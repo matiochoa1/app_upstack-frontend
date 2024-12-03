@@ -9,13 +9,13 @@ import {
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Task } from "@/types/index";
+import { TaskProject } from "@/types/index";
 import { toast } from "react-toastify";
 import { deleteTask } from "@/api/TaskAPI";
 import { useDraggable } from "@dnd-kit/core";
 
 type TaskCardProps = {
-	task: Task;
+	task: TaskProject;
 	canEdit: boolean;
 };
 

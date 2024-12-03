@@ -1,4 +1,4 @@
-import { getProjectById } from "@/api/ProjectAPI";
+import { getFullProjectDetails } from "@/api/ProjectAPI";
 import AddTaskModal from "@/components/tasks/AddTaskModal";
 import EditTaskData from "@/components/tasks/EditTaskData";
 import TaskList from "@/components/tasks/TaskList";
@@ -18,7 +18,7 @@ export default function ProjectDetailsView() {
 
 	const { data, isLoading, isError } = useQuery({
 		queryKey: ["project", projectId],
-		queryFn: () => getProjectById(projectId), // siempre tiene que ser un callback por que si no se va a ejecutar al momento de renderizar el componente
+		queryFn: () => getFullProjectDetails(projectId), // siempre tiene que ser un callback por que si no se va a ejecutar al momento de renderizar el componente
 		retry: 1,
 	});
 	const canEdit = useMemo(() => data?.manager === user?._id, [data, user]);

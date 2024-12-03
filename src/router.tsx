@@ -15,6 +15,7 @@ import ProjectTeamView from "./views/projects/ProjectTeamView";
 import ProfileView from "./views/profile/ProfileView";
 import ChangePasswordView from "./views/profile/ChangePasswordView";
 import ProfileLayout from "./layouts/ProfileLayout";
+import NotFound from "./views/404/NotFound";
 
 export default function Router() {
 	return (
@@ -51,6 +52,11 @@ export default function Router() {
 						element={<ForgotPasswordView />}
 					/>
 					<Route path="/auth/reset-password" element={<NewPasswordView />} />
+				</Route>
+
+				<Route element={<AuthLayout />}>
+					<Route path="/404" element={<NotFound />} />{" "}
+					{/* El asterisco significa que si no se cumple ninguna de las condiciones se cumple que redirija a 404 */}
 				</Route>
 			</Routes>
 		</BrowserRouter>
