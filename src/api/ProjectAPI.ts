@@ -1,5 +1,6 @@
 import {
 	dashboardProjectSchema,
+	editProjectSchema,
 	Project,
 	ProjectFormData,
 } from "@/types/index";
@@ -40,7 +41,11 @@ export async function getProjectById(id: Project["_id"]) {
 	try {
 		const { data } = await api(`/projects/${id}`);
 
-		return data;
+		const response = editProjectSchema.safeParse(data);
+
+		if (response.success) {
+			return response.data;
+		}
 	} catch (error) {
 		if (isAxiosError(error) && error.response) {
 			throw new Error(error.response.data.error); // lo evaluamos para que no se rompa el proyecto
